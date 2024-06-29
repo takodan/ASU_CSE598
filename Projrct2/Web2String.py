@@ -1,6 +1,7 @@
 from flask import Flask, request
 import requests
 from bs4 import BeautifulSoup as bs
+import re
 
 app = Flask(__name__)
 
@@ -10,16 +11,19 @@ def Url():
     input = request.args.get('input', '')
 
     try:
-        print("INPUT:", input)
+        print("***INPUT:", input)
+
         url = input
         response = requests.get(url)
-        print("RESPONSE:", response)
+        print("***RESPONSE:", response)
         soup = bs(response.text, "html.parser")
         body = soup.find("body").text.strip()
-        print(body)
-        # bodyInList = body.split(", ")
-        # print(bodyInList)
-        return "String get: \n"+body
+        print("***BODY:", body)
+        result_without_punctuation = re.sub(r'(\b\w{2,})([,.!?])\s*', r'\1 ', body)
+        print("***RESULT:", result_without_punctuation)
+
+        return result_without_punctuation
+
     except ValueError:
         return "Please input url"
 

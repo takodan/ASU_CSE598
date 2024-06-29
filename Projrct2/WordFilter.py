@@ -1,4 +1,12 @@
-stopWords = [
+from flask import Flask, request
+import requests
+
+app = Flask(__name__)
+
+# @app.route('/')
+@app.route('/filter')
+def Filter():
+    stopWords = [
     'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
     "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself',
     'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her',
@@ -22,30 +30,21 @@ stopWords = [
     "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"
     ]
 
-for word in stopWords:
-    print(word, end="---")
-
-from flask import Flask, request
-import requests
-
-app = Flask(__name__)
-
-# @app.route('/')
-@app.route('/filter')
-def Filter():
     input = request.args.get('input', '')
 
     try:
-        print("INPUT:", input)
-        webstring = input
-        print("original webstring: "+webstring)
-        newstring = webstring
+        print("***INPUT:", input) # original string
+        original_string = input
 
-        for word in stopWords:
-            newstring = newstring.replace(word, "")
+        words = original_string.split()
 
-        print(newstring)
-        return "original string: \n"+webstring+"\n\nnew string: \n"+newstring
+        filtered_words = [word for word in words if word.lower() not in stopWords]
+
+        new_string = ' '.join(filtered_words)
+
+        print("***NEW_STRING:", new_string)
+
+        return new_string
     except ValueError:
         return "Please input string"
 
