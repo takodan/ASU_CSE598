@@ -1,3 +1,39 @@
+import requests
+from bs4 import BeautifulSoup as bs
+import string
+import re
+
+def Web2String(input):
+  print("INPUT:", input)
+
+  url = input
+  response = requests.get(url)
+  print("RESPONSE:", response)
+  soup = bs(response.text, "html.parser")
+  body = soup.find("body").text.strip()
+  print(body)
+  punctuation = set(string.punctuation)
+  no_punctuation_text = ''.join(ch for ch in text if ch not in punctuation)
+  return no_punctuation_text
+
+if __name__ == '__main__':
+  text = "This is an example sentence with punctuation!@#$%^&*()?"
+  cleaned_text = remove_punctuation(text)
+  print(cleaned_text)
+  return "String get: \n"+body
+# url = "http://localhost:5000/"
+# response = requests.get(url)
+# soup = bs(response.text, "html.parser")
+# body = soup.find("body").text.strip()
+# print(body)
+# data = body.split()
+# print(data)
+
+# txt = "one one was a race horse, two two was one too."
+
+# x = txt.replace("o", "t")
+# print(x)
+
 stopWords = [
     'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
     "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself',
@@ -22,34 +58,18 @@ stopWords = [
     "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"
     ]
 
-for word in stopWords:
-    print(word, end="---")
-
-from flask import Flask, request
-import requests
-
-app = Flask(__name__)
-
-# @app.route('/')
-@app.route('/filter')
-def Filter():
-    input = request.args.get('input', '')
-
-    try:
-        print("INPUT:", input)
-        webstring = input
-        print("original webstring: "+webstring)
-        newstring = webstring
-
-        for word in stopWords:
-            newstring = newstring.replace(word, "")
-
-        print(newstring)
-        return "original string: \n"+webstring+"\n\nnew string: \n"+newstring
-    except ValueError:
-        return "Please input string"
+text1 = "This Web page tests a Python service which takes a number and return its absolute value.\
+\
+Url  E.g. http://localhost:4449/\
+Input  E.g. 1, 2, -3, -4.5"
 
 
+def remove_stopwords(text):
+  stop_words = stopWords
+  filtered_words = [word for word in text.split() if word.lower() not in stop_words]
+  return ' '.join(filtered_words)
 
 if __name__ == '__main__':
-    app.run('localhost', 4448)
+  text = text1
+  cleaned_text = remove_stopwords(text)
+  print(cleaned_text)

@@ -4,26 +4,26 @@ from bs4 import BeautifulSoup as bs
 
 app = Flask(__name__)
 
-@app.route('/')
+# @app.route('/')
 @app.route('/url')
-def absolute():
+def Url():
     input = request.args.get('input', '')
 
     try:
-        print("*****", input)
+        print("INPUT:", input)
         url = input
         response = requests.get(url)
-        print("*****", response)
+        print("RESPONSE:", response)
         soup = bs(response.text, "html.parser")
         body = soup.find("body").text.strip()
         print(body)
         # bodyInList = body.split(", ")
         # print(bodyInList)
-        return "String get"
+        return "String get: \n"+body
     except ValueError:
         return "Please input url"
 
-    
+
 
 if __name__ == '__main__':
     app.run('localhost', 4449)
