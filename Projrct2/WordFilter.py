@@ -1,9 +1,8 @@
 from flask import Flask, request
-import requests
 
 app = Flask(__name__)
 
-# @app.route('/')
+@app.route('/')
 @app.route('/filter')
 def Filter():
     stopWords = [
@@ -30,19 +29,29 @@ def Filter():
     "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"
     ]
 
+    # get the text from args
     input = request.args.get('input', '')
 
     try:
-        print("***INPUT:", input) # original string
+        # print("***INPUT:", input)
         original_string = input
+        # path = 'output1.txt'
+        # f = open(path, 'a', encoding='utf-8')
+        # f.write(original_string)
+        # f.close()
 
         words = original_string.split()
 
+        # using stopWords to filter the words
         filtered_words = [word for word in words if word.lower() not in stopWords]
 
         new_string = ' '.join(filtered_words)
 
-        print("***NEW_STRING:", new_string)
+        # print("***NEW_STRING:", new_string).
+        # path = 'output2.txt'
+        # f = open(path, 'a', encoding='utf-8')
+        # f.write(new_string)
+        # f.close()
 
         return new_string
     except ValueError:

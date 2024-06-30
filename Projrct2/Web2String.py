@@ -5,27 +5,43 @@ import re
 
 app = Flask(__name__)
 
-# @app.route('/')
-@app.route('/url')
-def Url():
+@app.route('/')
+@app.route('/content')
+def GetWebContent():
+
+    # get the url from args
     input = request.args.get('input', '')
 
     try:
-        print("***INPUT:", input)
-
+        # print("***INPUT:", input)
         url = input
         response = requests.get(url)
-        print("***RESPONSE:", response)
-        soup = bs(response.text, "html.parser")
-        body = soup.find("body").text.strip()
-        print("***BODY:", body)
-        result_without_punctuation = re.sub(r'(\b\w{2,})([,.!?])\s*', r'\1 ', body)
-        print("***RESULT:", result_without_punctuation)
+        # print("***RESPONSE:", response)
+
+        # using bs to get the text without tags
+        soup = bs(response.content, "html.parser")
+        txt = soup.text.strip()
+        # body = soup.find("body").text.strip()
+        # print("***TEXT:", txt)
+
+        # strip the text for later usage
+        lines = txt.splitlines()
+        non_blank_lines = [line for line in lines if line.strip()]
+        stripped_lines = [line.strip() for line in non_blank_lines]
+        stripped_string = '\n'.join(stripped_lines)
+        stripped_string = stripped_string.replace(" |", "")
+        stripped_string = stripped_string.replace(",", "")
+        result_without_punctuation = re.sub(r'(\(*)(\b\w{2,})(\)*)([,.!?)])\s*', r'\2 ', stripped_string)
+        # print("***RESULT:", result_without_punctuation.strip())
+        # path = 'output.txt'
+        # f = open(path, 'a', encoding='utf-8')
+        # f.write(result_without_punctuation)
+        # f.close()
 
         return result_without_punctuation
 
     except ValueError:
-        return "Please input url"
+        return "wrong url"
 
 
 
