@@ -9,10 +9,6 @@ def calculate_top_tfidf():
 
     # get the texts/docs from args
     input = request.args.get('input', '')
-    # path = 'output.txt'
-    # f = open(path, 'a', encoding='utf-8')
-    # f.write(input)
-    # f.close()
 
     try:
         # print("***INPUT:", input)

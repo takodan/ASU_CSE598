@@ -35,10 +35,6 @@ def Filter():
     try:
         # print("***INPUT:", input)
         original_string = input
-        # path = 'output1.txt'
-        # f = open(path, 'a', encoding='utf-8')
-        # f.write(original_string)
-        # f.close()
 
         words = original_string.split()
 
@@ -46,12 +42,7 @@ def Filter():
         filtered_words = [word for word in words if word.lower() not in stopWords]
 
         new_string = ' '.join(filtered_words)
-
         # print("***NEW_STRING:", new_string).
-        # path = 'output2.txt'
-        # f = open(path, 'a', encoding='utf-8')
-        # f.write(new_string)
-        # f.close()
 
         return new_string
     except ValueError:

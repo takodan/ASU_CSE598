@@ -33,10 +33,6 @@ def GetWebContent():
         stripped_string = stripped_string.replace(",", "")
         result_without_punctuation = re.sub(r'(\(*)(\b\w{2,})(\)*)([,.!?)])\s*', r'\2 ', stripped_string)
         # print("***RESULT:", result_without_punctuation.strip())
-        # path = 'output.txt'
-        # f = open(path, 'a', encoding='utf-8')
-        # f.write(result_without_punctuation)
-        # f.close()
 
         return result_without_punctuation
 
