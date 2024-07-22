@@ -11,6 +11,5 @@ CSE 598: Foundations of Social Media Mining (2024 Summer)
 7. Social Media Application
 
 ## Project
-1. 
 2. Web Services and Apps: Implement three RESTful Web services, including "Web2String", "WordFilter" and "Top10Word".
 3. Social Media Mining: Implement ten social media mining algorithms and their corresponding RESTful Web services.
