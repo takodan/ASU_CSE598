@@ -1,5 +1,5 @@
 # ASU_CSE598
-CSE 598: Foundations of Social Media Mining
+CSE 598: Foundations of Social Media Mining (2024 Summer)
 
 ## Project 2
 Implement three RESTful Web services, including "Web2String", "WordFilter" and "Top10Word".
